@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css?family=Abel');
+
+body {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-around;
+	font-family: 'Abel';
+}
+
+ul {
+	display: flex;
+	flex-basis: 20%;
+	border: 1px solid;
+	border-color: #f1f1f1;
+	padding: 1em;
+	list-style: none;
+}
+h3 {
+	color: #4382cb;
+}
+.Avail {
+	color: red;
+}
+
+.profile {
+	border-radius: 50%;
+}
+
+.user {
+	font-size: 1.4em;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.user h1 {
+	font-size: 3em;
+	margin: 0.25em 0;
+}
+
+.user .primary {
+	display: flex;
+}
+
+.user .contact p {
+	margin: 0;
+}
+
+.user figure {
+	margin: 1em;
+}
+
+.user figure img {
+	border: thin solid #666;
+	border-radius: 50%;
+	padding: 0.5em;
+	width: 150px;
+}
+
+.user dl dt {
+	float: left;
+	font-weight: bold;
+	text-align: right;
+	display: block;
+	width: calc(150px + 1.5em);
+	margin-bottom: 0.5em;
+}
+
+.user dl dd {
+	margin-left: calc(150px + 3em);
+	margin-bottom: 0.5em;
+}
