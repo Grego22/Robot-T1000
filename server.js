@@ -27,12 +27,12 @@ app.get('/', (request, response) => {
   })
 })
 app.get('/info/:id', (request, response) => {
-	const requestId = parseInt(request.params.id)
-  databse.one('SELECT * FROM "t1000" WHERE id =$1', [id])
+	const id = (request.params.id)
+  database.one('SELECT * FROM "t1000" WHERE id =$1', [id])
   .then(robotdata => {
 	response.render('info', robotdata)
 })
-)}
+})
 
 app.listen(7778, function() {
 	console.log('Looking good Billy Ray!!!')
