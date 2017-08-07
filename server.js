@@ -28,17 +28,12 @@ app.get('/', (request, response) => {
 })
 app.get('/info/:id', (request, response) => {
 	const requestId = parseInt(request.params.id)
-
-	const foundUser = data.users.find(user => user.id === requestId)
-
-	response.render('info', foundUser)
+  databse.one('SELECT * FROM "t1000" WHERE id =$1', [id])
+  .then(robotdata => {
+	response.render('info', robotdata)
 })
-/*
-app.get('users/:id', (request, response) => {
-	response.render('users', data)
-  const requestId = request.params.id
-})
-*/
+)}
+
 app.listen(7778, function() {
 	console.log('Looking good Billy Ray!!!')
 })
