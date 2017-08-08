@@ -30,8 +30,10 @@ app.get('/info/:id', (request, response) => {
 	const id = (request.params.id)
   database.one('SELECT * FROM "t1000" WHERE id =$1', [id])
   .then(robotdata => {
-	response.render('info', robotdata)
-})
+	response.render('info', robotdata).catch(robotdata=>{
+    response.render('error', robotdata)
+    })
+  })
 })
 
 app.listen(7778, function() {
