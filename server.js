@@ -51,6 +51,7 @@ app.get('/info/:id', (request, response) => {
     response.render('addRobot')
   )}
 app.post('/addId', request, response =>{
+
   const insertRobot ={
     username: request.body.username,
     email: request.body.email,
@@ -86,8 +87,9 @@ app.post('/addId', request, response =>{
     })
     response.redirect('/')
   }
-  database.one('INSERT INTO "t1000" (completed, username)')
 })
+  // database.one('INSERT INTO "t1000" (completed, username)')
+
 
 app.listen(7778, function() {
 	console.log('Looking good Billy Ray!!!')
