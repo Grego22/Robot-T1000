@@ -64,10 +64,9 @@ const insertRobot ={
     university: request.body.university,
     job: request.body.job
   }
-  console.log(insertRobot)
     database
     .one(
-      `INSERT INTO "robots" (username, email, university, job) VALUES ($(username), $(email), $(university), $(job)) RETURNING id`,
+      `INSERT INTO "t1000" (username, email, university, job) VALUES ($(username), $(email), $(university), $(job)) RETURNING id`,
       insertRobot
     )
     .then(insertRobotId => {
@@ -79,6 +78,13 @@ const insertRobot ={
 
   response.redirect("/")
 }
+})
+
+app.delete('/info/:id', (request, response) =>{
+  const id = request.params.id
+  database.none('DELETE FROM "t1000" WHERE ID =$1', [id]).then(() =>{
+    response.json({success:true})
+  })
 })
 
 app.listen(7778, function() {
