@@ -4,7 +4,8 @@ const data = require('./data')
 const pgPromise = require('pg-promise')()
 const database = pgPromise({database: "t1000"})
 const mustacheExpress = require('mustache-express')
-const body-parser = require('body-parser')
+const bodyParser = require('body-parser')
+const expressValidator = require("express-validator")
 
 //mark would use console.log data hear to make sure we have it!
 
@@ -13,6 +14,7 @@ const body-parser = require('body-parser')
 //teach our app to use public for all public files
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(expressValidator())
 
 app.use(bodyParser.json())
 
@@ -55,11 +57,35 @@ app.post('/addId', request, response =>{
     university: request.body.university,
     job: request.body.job
   }
+  console.log(insertRobot)
+    database
+    .one(
+      `INSERT INTO "robots" (username, email, university, job) VALUES ($(username), $(email), $(university), $(job)) RETURNING id`,
+      insertRobot
+    )
+    .then(insertRobotId => {
+      robot_id: insertRobotId.id
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+  response.redirect("/")
+}
+})
   database
   .one(
-    'INSERT INTO "t1000" (username, email, university, job) VALUES ($(username))'
+    'INSERT INTO "t1000" (username, email, university, job) VALUES ($(username), $(email), $(university), $(job)) RETURNING id',
+    insertRobot
   )
-
+    .then(insertRobotId => {
+      robot_id: insertRobotId.id
+    })
+    .catch(error =>{
+      console.log(error);
+    })
+    response.redirect('/')
+  }
   database.one('INSERT INTO "t1000" (completed, username)')
 })
 
