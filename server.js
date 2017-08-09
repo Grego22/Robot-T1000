@@ -4,6 +4,7 @@ const data = require('./data')
 const pgPromise = require('pg-promise')()
 const database = pgPromise({database: "t1000"})
 const mustacheExpress = require('mustache-express')
+const body-parser = require('body-parser')
 
 //mark would use console.log data hear to make sure we have it!
 
@@ -11,6 +12,9 @@ const mustacheExpress = require('mustache-express')
 
 //teach our app to use public for all public files
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(bodyParser.json())
 
 //teach our app to use mustache engine for rendering template
 app.engine('mustache', mustacheExpress())
@@ -26,6 +30,7 @@ app.get('/', (request, response) => {
 	response.render('index', {users: robotdata})
   })
 })
+
 app.get('/info/:id', (request, response) => {
 	const id = request.params.id
 
@@ -35,10 +40,28 @@ app.get('/info/:id', (request, response) => {
     response.render("info", robotdata)
      })
 
-  .catch(robotdata => {
-       response.render("error", robotdata)
-     })
+  // .catch(robotdata => {
+  //      response.render("error", robotdata)
+  //    })
   })
+
+  app.get('/add', (request, response)=>{
+    response.render('addRobot')
+  )}
+app.post('/addId', request, response =>{
+  const insertRobot ={
+    username: request.body.username,
+    email: request.body.email,
+    university: request.body.university,
+    job: request.body.job
+  }
+  database
+  .one(
+    'INSERT INTO "t1000" (username, email, university, job) VALUES ($(username))'
+  )
+
+  database.one('INSERT INTO "t1000" (completed, username)')
+})
 
 app.listen(7778, function() {
 	console.log('Looking good Billy Ray!!!')
