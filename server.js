@@ -49,10 +49,16 @@ app.get('/info/:id', (request, response) => {
 
   app.get('/add', (request, response)=>{
     response.render('addRobot')
-  )}
-app.post('/addId', request, response =>{
+  })
+app.post('/addId', (request, response) =>{
+request.checkBody('username', 'You must enter a Username').notEmpty()
+  let errors = request.validationErrors()
 
-  const insertRobot ={
+if(errors){
+  response.render('index', {errors})
+} else {
+
+const insertRobot ={
     username: request.body.username,
     email: request.body.email,
     university: request.body.university,
@@ -74,22 +80,6 @@ app.post('/addId', request, response =>{
   response.redirect("/")
 }
 })
-  database
-  .one(
-    'INSERT INTO "t1000" (username, email, university, job) VALUES ($(username), $(email), $(university), $(job)) RETURNING id',
-    insertRobot
-  )
-    .then(insertRobotId => {
-      robot_id: insertRobotId.id
-    })
-    .catch(error =>{
-      console.log(error);
-    })
-    response.redirect('/')
-  }
-})
-  // database.one('INSERT INTO "t1000" (completed, username)')
-
 
 app.listen(7778, function() {
 	console.log('Looking good Billy Ray!!!')
